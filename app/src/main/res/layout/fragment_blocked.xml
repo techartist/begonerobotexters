@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+   <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toTopOf="@+id/guideline"
+              app:layout_constraintStart_toEndOf="@+id/checkbox"
+              android:text="@string/select_all"
+              android:layout_marginStart="15dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline"
+            app:layout_constraintGuide_begin="75dp"
+            android:orientation="horizontal"/>
+
+   <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            tools:listitem="@layout/recycler_item_view"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="75dp"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Be Gone Robotexters</string>
+    <string name="action_settings">Settings</string>
+    <string name="what_to_tell_robotexters">Put What You Want To tell RoboTexters</string>
+
+    <!--permissions-->
+    <string name="attention">Attention!</string>
+    <string name="read_sms_not_granted">This app will not run unless you accept read SMS permission.</string>
+    <string name="read_contacts_not_granted">This app will not run unless you accept Read Contacts permission.</string>
+    <string name="receive_messages_not_granted">This app will not run unless you accept the receive messages permission.</string>
+    <string name="why_permission">Why we need these permissions?</string>
+    <string name="why_permission_explanation">We need these permissions in order to properly route sms messages, keep track of your messages and read your contacts so you can input the right numbers.</string>
+    <string name="i_agree">I agree</string>
+    <string name="grant_permission">Grant</string>
+    <string name="quit">Quit</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+
+    <string name="turn_off_autoresponder">Turn off Responder</string>
+    <string name="turn_on_autoresponder">Turn on Responder</string>
+
+    <!--Display Text File-->
+    <string name="eulaTitle">Terms and Conditions</string>
+    <string name="fileHelpTitle">Help</string>
+    <string name="eula">Be Gone Robotexters Terms and Conditions Hold From Harm. By using this app, the user agrees to hold harmless the makers of this app for any injury, tangible or intangible. Release from Liability. By using this app, the user agrees he or she alone is responsible for injuries, mental or physical, which occur during the use of this app.</string>
+    <string name="title_eula_activity">Terms and Conditions</string>
+    <string name="eula_button">I Accept the Terms</string>
+    <string name="resource_not_found">Resource Not Found</string>
+    <string name="ok">OK</string>
+    <string name="error">Error!</string>
+
+    <string name="text_rates_may_apply">NOTE: Texting rates may apply per response if you do not have unlimited text limits in your carrier\'s plan.</string>
+    <string name="instructions">Your auto-response text to anyone NOT in your contacts (with 10 digits or more) will be:</string>
+
+    <string name="menu1">Privacy Policy</string>
+    <string name="menu2">Terms and Conditions</string>
+    <string name="menu3">Block Numbers</string>
+    <string name="drawer_headings">Be Gone RoboTexters</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="tab1">Home</string>
+    <string name="tab2">Blocked Numbers</string>
+
+    <string name="phone_number">Phone Number</string>
+    <string name="blocked">Blocked</string>
+    <string name="block">Block</string>
+    <string name="number_of_times_seen"># of Times</string>
+    <string name="date">Last Received</string>
+    <string name="select_all">Select All</string>
+
+</resources>

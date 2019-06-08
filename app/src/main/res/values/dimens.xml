@@ -1,0 +1,10 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="WheelItemTextSize">24sp</dimen>
+    <dimen name="WheelItemSpace">12dp</dimen>
+    <dimen name="WheelIndicatorSize">2dp</dimen>
+    <dimen name="WheelMargins">8dp</dimen>
+    <dimen name="materialviewpager_logoHeight">35dp</dimen>
+</resources>
