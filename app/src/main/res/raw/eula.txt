@@ -10,4 +10,8 @@
 <span><b>Release from Liability</b></span>
 <p>By using this app, the user agrees he or she alone is responsible for injuries, mental or physical or legal, which occur during the use of this app. </p>
 
+<span><b>Permission to Access Contacts</b></span>
+<p>By using this app, the user agrees he or she agrees to allow the app to access personal contacts list on his or her phone.  The contacts will be used to compare incoming SMS and MMS messages.  Begonerobotexters will not collect, transmit or save this data. </p>
+
+
 

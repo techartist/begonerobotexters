@@ -31,7 +31,7 @@ public abstract class PhoneNumberDatabase : RoomDatabase() {
             }
         }
         fun newTestInstance(context: Context) =
-            Room.inMemoryDatabaseBuilder(context, PhoneNumberDatabase::class.java).build()
+            Room.inMemoryDatabaseBuilder(context, PhoneNumberDatabase::class.java).allowMainThreadQueries().build()
     }
 }
 

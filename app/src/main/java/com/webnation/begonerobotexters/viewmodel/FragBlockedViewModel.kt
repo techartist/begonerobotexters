@@ -52,7 +52,6 @@ class FragBlockedViewModel(application: Application) : AndroidViewModel(applicat
                 } while (c.moveToNext())
             }
 
-
             repository.updateAllBlockedNumberInDatabase(list)
             c.close()
         }

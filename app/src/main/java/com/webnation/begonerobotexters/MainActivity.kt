@@ -330,7 +330,5 @@ class MainActivity : AppCompatActivity() {
             return (isDefault)
         }
 
-
-
     }
 }
