@@ -13,6 +13,7 @@ import android.preference.PreferenceManager
 import android.provider.ContactsContract
 import android.telephony.SmsManager
 import android.telephony.SmsMessage
+import android.text.TextUtils
 import com.webnation.begonerobotexters.MainActivity
 import com.webnation.begonerobotexters.database.PhoneNumber
 import com.webnation.begonerobotexters.database.PhoneNumberDAO
@@ -68,7 +69,8 @@ class SMSIntentService : IntentService("SMSService"), KoinComponent {
                          !message.isNullOrEmpty() &&
                          autoResponderOn &&
                          !isNumberBlocked(sender)   &&
-                         !isNumberTextedInLast5Minutes(sender)) {
+                         !isNumberTextedInLast5Minutes(sender) &&
+                         doesMessageContainFilteredWords(msgs[i]?.messageBody)    ) {
                              val smsManager = SmsManager.getDefault()
                              smsManager.sendTextMessage(sender, null, message, null, null)
                              handleText(sender)
@@ -80,6 +82,16 @@ class SMSIntentService : IntentService("SMSService"), KoinComponent {
             e.printStackTrace()
             Timber.e(e)
         }
+    }
+
+    fun doesMessageContainFilteredWords(message : String?) : Boolean {
+        val filters = sharedPreferences.getString(MainActivity.FILTERS,"")
+        if (TextUtils.isEmpty(filters)) return false
+        val listOfWords = filters?.split(",")
+        listOfWords?.forEach {
+            if (message?.contains(it) as Boolean) return true
+        }
+        return false
     }
 
     fun isNumberTextedInLast5Minutes(number : String) : Boolean {

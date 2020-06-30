@@ -8,8 +8,14 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.telecom.TelecomManager
+import android.text.InputType
+import android.text.method.ScrollingMovementMethod
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +29,7 @@ import com.webnation.begonerobotexters.adapters.ContentFragmentAdapter
 import com.webnation.begonerobotexters.fragments.FragmentBlocked
 import com.webnation.begonerobotexters.widgets.SlidingTabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
@@ -109,6 +116,41 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, EulaActivity::class.java)
                     intent.putExtra(keyFileName, "eula")
                     startActivity(intent)
+                }
+                R.id.navigation_item_3 -> {
+                    val edittext = EditText(this@MainActivity)
+                    editText.textSize = 18.0f
+                    edittext.setSingleLine(false);
+                    edittext.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+                    edittext.setLines(3);
+                    edittext.setMaxLines(7);
+                    edittext.setVerticalScrollBarEnabled(true);
+                    editText.setHorizontallyScrolling(false)
+                    edittext.setMovementMethod(ScrollingMovementMethod.getInstance());
+                    edittext.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
+                    edittext.background = resources.getDrawable(R.drawable.edit_text_border)
+                    edittext.gravity = Gravity.TOP
+                    val params = FrameLayout.LayoutParams(600, FrameLayout.LayoutParams.WRAP_CONTENT)
+                    params.setMargins(75, 10, 10, 10)
+                    params.gravity = Gravity.CENTER_VERTICAL
+
+                    val wordFilters = sharedPreferences.getString(FILTERS, "")
+                    edittext.setText(wordFilters.toString())
+                    val alert = AlertDialog.Builder(this@MainActivity)
+                    alert.setMessage(resources.getString(R.string.filter_alert_message))
+                    alert.setTitle(resources.getString(R.string.title_of_filter_alert))
+
+                    alert.setView(edittext)
+
+                    alert.setNeutralButton(resources.getString(R.string.ok)) { dialog, whichButton ->
+                        val youEditTextValue = edittext.text.toString()
+                        sharedPreferences.edit().putString(FILTERS, youEditTextValue).apply()
+                        dialog.dismiss()
+                        recreate()
+                    }
+
+                    alert.show()
+                    edittext.layoutParams = params
                 }
             }
             if (navigation_view != null) {
@@ -313,6 +355,7 @@ class MainActivity : AppCompatActivity() {
         private val REQUEST_READ_CONTACTS = 114
         private val REQUEST_RECEIVE_MESSAGES = 115
         private val REQUEST_SEND_SMS = 116
+        public val FILTERS = "messageFilters"
 
         const val EULA_ACCEPTED = "eulaAccepted"
         const val FILE_EULA = "eula"

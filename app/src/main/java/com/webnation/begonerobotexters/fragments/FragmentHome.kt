@@ -46,7 +46,6 @@ class FragmentHome : Fragment() {
         }
         editText.addTextChangedListener(textWatcher)
 
-
         if (fragHomeViewModel.doesSharedPrefsContainAutoResponder()) {
             tb?.isChecked = fragHomeViewModel.getBoolean()
         }

@@ -34,7 +34,8 @@
 
     <string name="menu1">Privacy Policy</string>
     <string name="menu2">Terms and Conditions</string>
-    <string name="menu3">Block Numbers</string>
+    <string name="menu3">Message Filters</string>
+
     <string name="drawer_headings">Be Gone RoboTexters</string>
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -48,5 +49,8 @@
     <string name="number_of_times_seen"># of Times</string>
     <string name="date">Last Received</string>
     <string name="select_all">Select All</string>
+
+    <string name="title_of_filter_alert">Message Filters</string>
+    <string name="filter_alert_message">Only respond to messages that contain these words, separated by commas.</string>
 
 </resources>

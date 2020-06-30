@@ -46,7 +46,6 @@ class DatabaseTest :KoinTest {
 
         stopKoin()
 
-
         startKoin {
             // use AndroidLogger as Koin Logger - default Level.INFO
             androidLogger()
