@@ -19,6 +19,7 @@ class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, v
 
     interface OnItemChecked {
         fun updatePhoneNumber(isBlocked : Boolean, phoneNumber: PhoneNumber)
+        fun uncheckMainCheckbox()
     }
 
     override fun getItemViewType(position :Int) : Int{
@@ -46,6 +47,7 @@ class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, v
                 holder.numberOfTimes.text = current.numberOfTimesSeen.toString()
                 holder.checkBox.setOnCheckedChangeListener { checkbox, isChecked ->
                     onItemChecked.updatePhoneNumber(isChecked, checkbox.tag as PhoneNumber)
+                    onItemChecked.uncheckMainCheckbox()
                 }
                 holder.checkBox.setOnClickListener{ mainCheckboxChecked = false }
             }

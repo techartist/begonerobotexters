@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +37,18 @@ class FragmentBlocked : Fragment(), BlockedNumberRecyclerAdapter.OnItemChecked {
 
     }
 
+    override fun uncheckMainCheckbox() {
+        checkbox.setOnCheckedChangeListener(null)
+        checkbox.isChecked = false
+        checkbox.setOnCheckedChangeListener(onCheckChangedListener)
+    }
+
+    val onCheckChangedListener = object: CompoundButton.OnCheckedChangeListener {
+        override fun onCheckedChanged(checkbox: CompoundButton?, isChecked: Boolean) {
+            adapter.checkAllBoxes(isChecked)
+        }
+    }
+
     // Lazy Inject ViewModel
     val blockedNumberViewModel: FragBlockedViewModel by viewModel()
     lateinit var adapter : BlockedNumberRecyclerAdapter
@@ -47,9 +60,7 @@ class FragmentBlocked : Fragment(), BlockedNumberRecyclerAdapter.OnItemChecked {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkbox.setOnCheckedChangeListener{ checkbox, isChecked ->
-            adapter.checkAllBoxes(isChecked)
-        }
+        checkbox.setOnCheckedChangeListener(onCheckChangedListener)
 
         recyclerview.setAdapter(adapter)
         recyclerview.setLayoutManager(LinearLayoutManager(context))
