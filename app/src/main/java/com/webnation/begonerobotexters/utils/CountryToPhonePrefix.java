@@ -73,7 +73,6 @@ public class CountryToPhonePrefix {
         map.put("CU", "+53");
         map.put("CV", "+238");
         map.put("CX", "+61");
-        map.put("CY", "+90-392");
         map.put("CY", "+357");
         map.put("CZ", "+420");
         map.put("DE", "+49");
@@ -156,7 +155,6 @@ public class CountryToPhonePrefix {
         map.put("LY", "+218");
         map.put("MA", "+212");
         map.put("MC", "+377");
-        map.put("MD", "+373-533");
         map.put("MD", "+373");
         map.put("ME", "+382");
         map.put("MG", "+261");

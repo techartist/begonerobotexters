@@ -10,21 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.webnation.begonerobotexters.database.PhoneNumber
 
 
-class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, checkChangedListener :OnItemChecked) : RecyclerView.Adapter<BlockedNumberRecyclerAdapter.BlockedNumberViewHolder>() {
+class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, val onItemChecked: OnItemChecked) : RecyclerView.Adapter<BlockedNumberRecyclerAdapter.BlockedNumberViewHolder>() {
 
-    val onItemChecked : OnItemChecked
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     var phoneNumbers = arrayListOf<PhoneNumber>()
-    private var chkArr: Array<Boolean> = arrayOf<Boolean>()
     private var allIsSelected = false
     private var mainCheckboxChecked = false
 
     interface OnItemChecked {
         fun updatePhoneNumber(isBlocked : Boolean, phoneNumber: PhoneNumber)
-    }
-
-    init {
-        onItemChecked = checkChangedListener
     }
 
     override fun getItemViewType(position :Int) : Int{
@@ -39,9 +33,8 @@ class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, c
             val current = phoneNumbers[position]
 
             if (position > 0) {
-                if (current.numberIsBlocked == 1) {
-                    holder.checkBox.isChecked = true
-                }
+                holder.checkBox.setOnCheckedChangeListener(null)
+                holder.checkBox.isChecked = current.numberIsBlocked == 1
 
                 if (mainCheckboxChecked) {
                     holder.checkBox.isChecked = allIsSelected
@@ -55,10 +48,8 @@ class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, c
                     onItemChecked.updatePhoneNumber(isChecked, checkbox.tag as PhoneNumber)
                 }
                 holder.checkBox.setOnClickListener{ mainCheckboxChecked = false }
-
             }
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -68,6 +59,11 @@ class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, c
     fun checkAllBoxes(isChecked : Boolean) {
         allIsSelected = isChecked
         mainCheckboxChecked = true
+        phoneNumbers.forEach {
+            if (!it.blockedNumber.isEmpty()) {
+                onItemChecked.updatePhoneNumber(isChecked, it)
+            }
+        }
         notifyDataSetChanged()
     }
 
@@ -87,26 +83,22 @@ class BlockedNumberRecyclerAdapter internal constructor(val context: Context?, c
             date = itemView.findViewById(com.webnation.begonerobotexters.R.id.date)
             numberOfTimes = itemView.findViewById(com.webnation.begonerobotexters.R.id.numberOfTimesSeen)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlockedNumberViewHolder {
-        var itemView : View
+        val itemView : View
         if (viewType == 0) {
             itemView = mInflater.inflate(com.webnation.begonerobotexters.R.layout.recycler_item_view, parent, false)
         } else {
             itemView = mInflater.inflate(com.webnation.begonerobotexters.R.layout.recycler_item_header_view, parent, false)
-
         }
         return BlockedNumberViewHolder(itemView)
     }
 
     fun setPhoneNumbers(numbers: List<PhoneNumber>) {
-
         phoneNumbers = ArrayList(numbers)
         val phoneNumber = PhoneNumber("")
         phoneNumbers.add(0,phoneNumber)
         notifyDataSetChanged()
     }
-
 }

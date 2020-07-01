@@ -17,14 +17,8 @@ import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-class MMSIntentService : IntentService("MMSService"), KoinComponent {
-    lateinit var context: Context
+class MMSIntentService : IntentService("MMSService") {
     private val sharedPreferences : SharedPreferences by inject()
-
-    override fun onCreate() {
-        super.onCreate()
-        context = this
-    }
 
     override fun onHandleIntent(intent: Intent?) {
         val textMessages = MMSUtils.getMessagesFrom(this, intent)

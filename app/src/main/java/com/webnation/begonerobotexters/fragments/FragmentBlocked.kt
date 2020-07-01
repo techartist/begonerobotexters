@@ -23,17 +23,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
 
-class FragmentBlocked : Fragment(), KoinComponent, BlockedNumberRecyclerAdapter.OnItemChecked {
+class FragmentBlocked : Fragment(), BlockedNumberRecyclerAdapter.OnItemChecked {
 
     override fun updatePhoneNumber(isBlocked: Boolean, phoneNumber: PhoneNumber) {
-        GlobalScope.launch(Dispatchers.Main) {
-            blockedNumberViewModel.updatePhoneNumber(isBlocked,phoneNumber)
-            if (isBlocked) {
-                blockedNumberViewModel.blockNumberInSystem(phoneNumber.blockedNumber)
-            } else {
-                blockedNumberViewModel.deleteNumberInSystem(phoneNumber.blockedNumber)
-            }
+
+        blockedNumberViewModel.updatePhoneNumber(isBlocked, phoneNumber)
+        if (isBlocked) {
+            blockedNumberViewModel.blockNumberInSystem(phoneNumber.blockedNumber)
+        } else {
+            blockedNumberViewModel.deleteNumberInSystem(phoneNumber.blockedNumber)
         }
+
     }
 
     // Lazy Inject ViewModel
@@ -61,15 +61,13 @@ class FragmentBlocked : Fragment(), KoinComponent, BlockedNumberRecyclerAdapter.
         if (context != null) {
             adapter = BlockedNumberRecyclerAdapter(context, this@FragmentBlocked)
 
-            blockedNumberViewModel.allNumbers.observe(this, object : Observer<List<PhoneNumber>> {
-                override fun onChanged(t: List<PhoneNumber>?) {
+            blockedNumberViewModel.allNumbers.observe(this, Observer {
                     if (MainActivity.isAppAsDefaultDialer(requireContext())) {
-                        if (t != null) {
-                            adapter.setPhoneNumbers(t)
+                        if (it != null) {
+                            adapter.setPhoneNumbers(it)
                         }
                     }
 
-                }
             })
         }
     }

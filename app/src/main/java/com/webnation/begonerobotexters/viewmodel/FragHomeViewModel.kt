@@ -8,8 +8,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class FragHomeViewModel(application: Application) : AndroidViewModel(application),KoinComponent {
-    private val sharedPreferences: SharedPreferences by inject()
+class FragHomeViewModel(application: Application, val sharedPreferences: SharedPreferences) : AndroidViewModel(application) {
 
     fun putString(string : String) {
         sharedPreferences.edit().putString(TEXT_STRING, string.toString()).apply()
@@ -39,6 +38,4 @@ class FragHomeViewModel(application: Application) : AndroidViewModel(application
         const val TEXT_STRING = "roboTextString"
         const val AUTO_RESPONDER = "autoResponder"
     }
-
-
 }

@@ -37,7 +37,7 @@ ext {
     supportVersion = "1.0.0"
     constraint_layout_version = "2.0.0-alpha2"
     core_ktx_version = "1.0.1"
-    lifecycleVersion = "2.0.0"
+    lifecycleVersion = "2.2.0"
 }
 
 task clean(type: Delete) {

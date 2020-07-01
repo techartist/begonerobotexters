@@ -78,9 +78,14 @@ class MainActivity : AppCompatActivity() {
             slidingTabLayout.setTabSelected(0)
         }
 
-        // Change indicator color
-        slidingTabLayout.setCustomTabColorizer { ContextCompat.getColor(this,R.color.tab_indicator) }
+        val tabColorizer = object : SlidingTabLayout.TabColorizer {
+            override fun getIndicatorColor(position: Int): Int {
+                return ContextCompat.getColor(this@MainActivity ,R.color.tab_indicator)
+            }
+        }
 
+        // Change indicator color
+        slidingTabLayout.setCustomTabColorizer(tabColorizer)
     }
 
     private fun setUpNavigationDrawer() {
@@ -90,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         mDrawerToggle = object: ActionBarDrawerToggle(this, drawer_layout, toolbar,R.string.drawer_open, R.string.drawer_close) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-
                 invalidateOptionsMenu()
             }
 
@@ -161,13 +165,13 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         mDrawerToggle.onConfigurationChanged(newConfig)
     }
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -203,9 +207,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
         intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,context.applicationContext.getPackageName())
         startActivityForResult(activity,intent, FragmentBlocked.RC_DEFAULT_PHONE,null)
-
     }
-
 
     fun getPermissions() {
         try {
@@ -231,12 +233,10 @@ class MainActivity : AppCompatActivity() {
                                 dialog.dismiss()
                             }
 
-
                             // Display a negative button on alert dialog
                             builder.setNegativeButton(resources.getString(R.string.quit)){_,_ ->
                                 android.os.Process.killProcess(android.os.Process.myPid())
                             }
-
 
                             // Finally, make the alert dialog using builder
                             val dialog: AlertDialog = builder.create()
@@ -247,7 +247,6 @@ class MainActivity : AppCompatActivity() {
                         }
                         if (!resultSet.isPermissionGranted(Manifest.permission.READ_SMS)) {
                             val builder = AlertDialog.Builder(this@MainActivity)
-
 
                             // Set the alert dialog title
                             builder.setTitle(resources.getString(R.string.attention))
@@ -263,12 +262,10 @@ class MainActivity : AppCompatActivity() {
                                 dialog.dismiss()
                             }
 
-
                             // Display a negative button on alert dialog
                             builder.setNegativeButton(resources.getString(R.string.quit)){_,_ ->
                                 android.os.Process.killProcess(android.os.Process.myPid())
                             }
-
 
                             // Finally, make the alert dialog using builder
                             val dialog: AlertDialog = builder.create()
@@ -331,13 +328,10 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.RECEIVE_WAP_PUSH,
                 Manifest.permission.SEND_SMS
             )
-
         } catch (e: Exception) {
-
             e.printStackTrace()
         }
     }
-
 
     /**
      * Handle the user's permission choice

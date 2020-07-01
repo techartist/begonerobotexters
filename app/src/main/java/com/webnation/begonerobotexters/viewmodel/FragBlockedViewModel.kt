@@ -5,25 +5,14 @@ import android.content.ContentValues
 import android.provider.BlockedNumberContract.BlockedNumbers
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.webnation.begonerobotexters.database.PhoneNumber
 import com.webnation.begonerobotexters.database.PhoneNumberRepository
 import com.webnation.begonerobotexters.datastructures.BlockedNumber
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
-import kotlin.coroutines.CoroutineContext
 
-
-class FragBlockedViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
-
-    private var parentJob = Job()
-    private val coroutineContext: CoroutineContext
-        get() = parentJob + Dispatchers.Main
-    private val scope = CoroutineScope(coroutineContext)
-    private val repository: PhoneNumberRepository by inject()
+class FragBlockedViewModel(application: Application, val repository: PhoneNumberRepository) : AndroidViewModel(application) {
     private val blockedNumbers  = arrayListOf<BlockedNumber>()
 
     val allNumbers: LiveData<List<PhoneNumber>>
@@ -32,7 +21,7 @@ class FragBlockedViewModel(application: Application) : AndroidViewModel(applicat
         allNumbers = repository.allNumbers
     }
 
-    suspend fun getBlockedNumbers() = scope.launch(Dispatchers.IO) {
+    suspend fun getBlockedNumbers() = viewModelScope.launch(Dispatchers.IO) {
         val list = arrayListOf<String>()
         val c = getApplication<Application>().getContentResolver().query(
             BlockedNumbers.CONTENT_URI,
@@ -55,33 +44,23 @@ class FragBlockedViewModel(application: Application) : AndroidViewModel(applicat
             repository.updateAllBlockedNumberInDatabase(list)
             c.close()
         }
-
     }
 
-    fun blockNumberInSystem(phoneNumber: String) = scope.launch(Dispatchers.Default) {
+    fun blockNumberInSystem(phoneNumber: String) = viewModelScope.launch(Dispatchers.Default) {
         val values = ContentValues()
         values.put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, phoneNumber)
         val uri = getApplication<Application>().getContentResolver().insert(BlockedNumbers.CONTENT_URI, values)
     }
 
-    fun deleteNumberInSystem(phoneNumber: String) = scope.launch(Dispatchers.Default) {
+    fun deleteNumberInSystem(phoneNumber: String) = viewModelScope.launch(Dispatchers.Default) {
         val values = ContentValues()
         values.put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, phoneNumber)
         val uri = getApplication<Application>().getContentResolver().insert(BlockedNumbers.CONTENT_URI, values)
         getApplication<Application>().getContentResolver().delete(uri, null, null);
-
     }
 
-    suspend fun updatePhoneNumber(isBlocked: Boolean, phoneNumber: PhoneNumber) = scope.launch(Dispatchers.IO) {
+    fun updatePhoneNumber(isBlocked: Boolean, phoneNumber: PhoneNumber) = viewModelScope.launch(Dispatchers.IO) {
         phoneNumber.numberIsBlocked = if (isBlocked) 1 else 0;
         repository.update(phoneNumber)
     }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        parentJob.cancel()
-    }
-
-
 }

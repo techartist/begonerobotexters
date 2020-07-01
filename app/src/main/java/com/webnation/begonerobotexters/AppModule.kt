@@ -19,8 +19,8 @@ val appModule = module {
 
     // MyViewModel ViewModel
     viewModel { EulaViewModel(get()) }
-    viewModel { FragHomeViewModel(get()) }
-    viewModel { FragBlockedViewModel(get()) }
+    viewModel { FragHomeViewModel(get(), get()) }
+    viewModel { FragBlockedViewModel(get(), get()) }
     single{
         getSharedPrefs(androidApplication())
     }

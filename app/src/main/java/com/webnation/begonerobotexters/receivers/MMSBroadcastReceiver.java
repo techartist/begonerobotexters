@@ -8,12 +8,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.webnation.begonerobotexters.services.MMSIntentService;
 
-
-/**
- * Created by kristywelsh on 11/16/16.
- * https://maximbogatov.wordpress.com/2011/08/13/mms-in-android/
- */
-
 public class MMSBroadcastReceiver extends BroadcastReceiver {
     private final String DEBUG_TAG = getClass().getSimpleName().toString();
     private static final String ACTION_MMS_RECEIVED = "android.provider.Telephony.WAP_PUSH_RECEIVED";
@@ -29,13 +23,10 @@ public class MMSBroadcastReceiver extends BroadcastReceiver {
     public static Context context = null;
 
     // Retrieve MMS
-    //http://stackoverflow.com/questions/14452808/sending-and-receiving-sms-and-mms-in-android-pre-kit-kat-android-4-4
     public void onReceive(Context context, Intent intent) {
 
-        this.context = context;
         String action = intent.getAction();
         String type = intent.getType();
-        Toast.makeText(context,"MMS received",Toast.LENGTH_LONG);
 
         if (action.equals(ACTION_MMS_RECEIVED) && type.equals(MMS_DATA_TYPE)) {
 
@@ -44,10 +35,5 @@ public class MMSBroadcastReceiver extends BroadcastReceiver {
             intentServiceIntent.putExtras(bundle);
             context.startService(intentServiceIntent);
         }
-
     }
-
-
-
-
 }
