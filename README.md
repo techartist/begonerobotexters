@@ -4,6 +4,6 @@ This application sends a response text message to any phone number not in the us
 
 It uses Koin, Kotlin and Coroutines and MVVM architecture using Room.
 
-![Application Flow]((https://github.com/techartist/begonerobotexters/blob/master/ApplicationFlow.png)
+![Application Flow](https://github.com/techartist/begonerobotexters/blob/master/ApplicationFlow.png)
 
 
