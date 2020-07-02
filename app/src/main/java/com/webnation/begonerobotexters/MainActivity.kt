@@ -202,13 +202,6 @@ class MainActivity : AppCompatActivity() {
         mDrawerToggle.syncState()
     }
 
-    fun getPermissionToBeDefaultDialer(activity : MainActivity) {
-        val context = activity as Context
-        val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
-        intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,context.applicationContext.getPackageName())
-        startActivityForResult(activity,intent, FragmentBlocked.RC_DEFAULT_PHONE,null)
-    }
-
     fun getPermissions() {
         try {
             Permiso.getInstance().requestPermissions(object : Permiso.IOnPermissionResult {
@@ -359,12 +352,16 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_CODE_EULA = 123
 
         fun isAppAsDefaultDialer(context: Context): Boolean {
-
             val telecom = context.getSystemService(TelecomManager::class.java)
-
             val isDefault = context.applicationContext.getPackageName().equals(telecom.getDefaultDialerPackage())
-
             return (isDefault)
+        }
+
+        fun getPermissionToBeDefaultDialer(activity : MainActivity) {
+            val context = activity as Context
+            val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
+            intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,context.applicationContext.getPackageName())
+            startActivityForResult(activity,intent, FragmentBlocked.RC_DEFAULT_PHONE,null)
         }
 
     }

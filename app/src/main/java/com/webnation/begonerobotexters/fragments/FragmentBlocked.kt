@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,9 +44,11 @@ class FragmentBlocked : Fragment(), BlockedNumberRecyclerAdapter.OnItemChecked {
         checkbox.setOnCheckedChangeListener(onCheckChangedListener)
     }
 
-    val onCheckChangedListener = object: CompoundButton.OnCheckedChangeListener {
-        override fun onCheckedChanged(checkbox: CompoundButton?, isChecked: Boolean) {
-            adapter.checkAllBoxes(isChecked)
+    val onCheckChangedListener by lazy {
+        object : CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(checkbox: CompoundButton?, isChecked: Boolean) {
+                adapter.checkAllBoxes(isChecked)
+            }
         }
     }
 
@@ -69,16 +72,44 @@ class FragmentBlocked : Fragment(), BlockedNumberRecyclerAdapter.OnItemChecked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (!MainActivity.isAppAsDefaultDialer(requireContext())) {
+            val alert = AlertDialog.Builder(requireContext())
+            alert.setMessage(resources.getString(R.string.reason_for_default_dialer))
+            alert.setTitle(resources.getString(R.string.not_default_dialer))
+
+            alert.setNegativeButton(resources.getString(R.string.no)) { dialog, whichButton ->
+                dialog.dismiss()
+            }
+
+            alert.setNegativeButton(resources.getString(R.string.yes)) { dialog, whichButton ->
+                MainActivity.getPermissionToBeDefaultDialer(requireActivity() as MainActivity)
+                dialog.dismiss()
+            }
+
+            alert.show()
+        }
+
         if (context != null) {
             adapter = BlockedNumberRecyclerAdapter(context, this@FragmentBlocked)
 
             blockedNumberViewModel.allNumbers.observe(this, Observer {
-                    if (MainActivity.isAppAsDefaultDialer(requireContext())) {
-                        if (it != null) {
-                            adapter.setPhoneNumbers(it)
-                        }
+                if (MainActivity.isAppAsDefaultDialer(requireContext())) {
+                    if (it != null) {
+                        adapter.setPhoneNumbers(it)
                     }
-
+                    textView.visibility = View.GONE
+                    recyclerview.visibility = View.VISIBLE
+                    blockButton.visibility = View.GONE
+                } else {
+                    textView.visibility = View.VISIBLE
+                    recyclerview.visibility = View.GONE
+                    blockButton.visibility = View.VISIBLE
+                    blockButton.setOnClickListener {
+                        MainActivity.getPermissionToBeDefaultDialer(
+                            requireActivity() as MainActivity
+                        )
+                    }
+                }
             })
         }
     }

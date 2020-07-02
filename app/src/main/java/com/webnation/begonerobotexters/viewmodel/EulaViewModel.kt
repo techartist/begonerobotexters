@@ -10,6 +10,6 @@ import kotlinx.coroutines.async
 class EulaViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun getText(fileName: String?) : String =
-        viewModelScope .async(Dispatchers.IO) { AndroidText(fileName,getApplication()).androidText }.await()
+        viewModelScope.async(Dispatchers.IO) { AndroidText(fileName,getApplication()).androidText }.await()
 
 }

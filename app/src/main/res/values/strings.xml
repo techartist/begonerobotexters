@@ -53,4 +53,8 @@
     <string name="title_of_filter_alert">Message Filters</string>
     <string name="filter_alert_message">Only respond to messages that contain these words, separated by commas.</string>
 
+    <string name="reason_for_default_dialer">You have to set the app as the default dialer in order to block numbers. Do you want to do this now?</string>
+    <string name="set_default">Set As Default</string>
+    <string name="not_default_dialer">This app is not default dialer</string>
+
 </resources>

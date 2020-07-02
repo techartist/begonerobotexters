@@ -40,9 +40,33 @@
             tools:listitem="@layout/recycler_item_view"
             app:layout_constraintTop_toBottomOf="@+id/guideline"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="75dp"
             />
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="75dp"
+            android:text="@string/reason_for_default_dialer"
+            android:visibility="gone"
+            />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/blockButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:text="@string/set_default"
+            android:visibility="gone"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
